@@ -62,7 +62,7 @@
   const addButton = document.querySelector('.add-form-button');
   const commentsList = document.querySelector('.comments');
 
-  addButton.document.addEventListener('click', () => {
+  addButton.addEventListener('click', () => {
     const name = inputEl.value;
     const text = textareaEl.value;
 
@@ -74,23 +74,23 @@
     const currentDate = new Date();
     const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
 
-    const newComment = 
+    const newComment =
       <li class="comment">
         <div class="comment-header">
-          <div>${name}</div>
-          <div>${formattedDate}</div>
+          <div>`${name}`</div>
+          <div>`${formattedDate}`</div>
         </div>
         <div class="comment-body">
-          <div class="comment-text">${text}</div>
+          <div class="comment-text">`${text}`</div>
         </div>
         <div class="comment-footer">
           <div class="likes">
             <span class="likes-counter">0</span>
             <button class="like-button"></button>
-            </div>
+          </div>
         </div>
-        </li>
-    ;
+      </li>
+      ;
 
     commentsList.innerHTML += newComment;
 
