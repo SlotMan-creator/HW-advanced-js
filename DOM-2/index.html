@@ -109,10 +109,10 @@
 
   function toggleLike(event) {
     const index = event.target.dataset.index;
-
+    // console.log(event.target);
     comments[index].liked = !comments[index].liked;
     comments[index].liked ? comments[index].likes++ : comments[index].likes--;
-    
+
     renderComments();
   }
 
