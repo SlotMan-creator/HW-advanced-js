@@ -79,17 +79,26 @@
   const addButton = document.querySelector('.add-form-button');
   const commentsList = document.querySelector('.comments');
 
+  function escapeHtml(html) {
+    return html
+      .replaceAll(/&/g, "&amp;")
+      .replaceAll(/</g, "&lt;")
+      .replaceAll(/>/g, "&gt;")
+      .replaceAll(/"/g, "&quot;")
+      .replaceAll(/'/g, "&#39;");
+  }
+
   function renderComments() {
     commentsList.innerHTML = '';
     comments.forEach((comment, index) => {
       const commentEl = `
         <li class="comment">
           <div class="comment-header">
-            <div>${comment.name}</div>
-            <div>${comment.date}</div>
+            <div>${escapeHtml(comment.name)}</div>
+            <div>${escapeHtml(comment.date)}</div>
           </div>
           <div class="comment-body">
-            <div class="comment-text">${comment.text}</div>
+            <div class="comment-text">${escapeHtml(comment.text)}</div>
           </div>
           <div class="comment-footer">
             <div class="likes">
@@ -104,6 +113,12 @@
     const likeButtons = document.querySelectorAll('.like-button');
     likeButtons.forEach(button => {
       button.addEventListener('click', toggleLike);
+    });
+    commentsList.querySelectorAll('.comment').forEach((commentEl, index) => {
+      commentEl.addEventListener('click', () => {
+        textareaEl.value = ' > ' + escapeHtml(comments[index].name) + ':' +
+          '\n*' + escapeHtml(comments[index].text) + '*';
+      });
     });
   }
 
