@@ -112,10 +112,7 @@
 
     comments[index].liked = !comments[index].liked;
     comments[index].liked ? comments[index].likes++ : comments[index].likes--;
-
-    const currentDate = new Date();
-    comments[index].date = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-
+    
     renderComments();
   }
 
