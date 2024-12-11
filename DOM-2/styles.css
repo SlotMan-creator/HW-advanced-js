@@ -50,6 +50,10 @@ body {
     justify-content: space-between;
   }
 
+  .comment-header:hover {
+    cursor: pointer;
+  }
+
   .comment-footer {
     display: flex;
     justify-content: flex-end;
@@ -62,6 +66,10 @@ body {
 
   .comment-text {
     font-size: 32px;
+  }
+
+  .comment-text:hover {
+    cursor: pointer;
   }
 
   .likes {
