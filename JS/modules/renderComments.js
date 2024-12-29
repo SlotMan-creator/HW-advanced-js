@@ -1,8 +1,8 @@
-import { escapeHtml } from './escapeHtml.js';
-import { comments } from './comments.js';
+import { escapeHtml } from './escapeHtml.js'
+import { comments } from './comments.js'
 
 export function renderComments(commentsList) {
-    commentsList.innerHTML = '';
+    commentsList.innerHTML = ''
     comments.forEach((comment, index) => {
         const commentEl = `
         <li class="comment">
@@ -19,7 +19,7 @@ export function renderComments(commentsList) {
               <button class="like-button ${comment.liked ? '-active-like' : ''}" data-index="${index}"></button>
             </div>
           </div>
-        </li>`;
-        commentsList.innerHTML += commentEl;
-    });
+        </li>`
+        commentsList.innerHTML += commentEl
+    })
 }

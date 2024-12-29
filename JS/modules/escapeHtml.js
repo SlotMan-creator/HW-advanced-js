@@ -4,5 +4,5 @@ export function escapeHtml(html) {
         .replaceAll(/</g, '&lt;')
         .replaceAll(/>/g, '&gt;')
         .replaceAll(/"/g, '&quot;')
-        .replaceAll(/'/g, '&#39;');
+        .replaceAll(/'/g, '&#39;')
 }

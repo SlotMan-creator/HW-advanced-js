@@ -1,4 +1,4 @@
-export const comments = [
+export let comments = [
     {
         name: 'Глеб Фокин',
         date: '12.02.22 12:18',
@@ -16,8 +16,8 @@ export const comments = [
 ]
 
 export function addComment(name, text) {
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
+    const currentDate = new Date()
+    const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`
 
     const newComment = {
         name: name,
@@ -25,12 +25,7 @@ export function addComment(name, text) {
         text: text,
         likes: 0,
         liked: false,
-    };
+    }
 
-    comments.push(newComment);
-}
-
-export function toggleLike(index) {
-    comments[index].liked = !comments[index].liked;
-    comments[index].liked ? comments[index].likes++ : comments[index].likes--;
+    comments.push(newComment)
 }
