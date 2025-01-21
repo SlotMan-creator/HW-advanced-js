@@ -25,8 +25,8 @@ export function setupEventListeners(addButton, commentsList, textareaEl) {
             const index = event.target.dataset.index
             if (comments[index]) {
                 const comment = comments[index]
-                comment.liked = !comment.liked
-                comment.liked ? comment.likes++ : comment.likes--
+                comment.isLiked = !comment.isLiked
+                comment.isLiked ? comment.likes++ : comment.likes--
                 renderComments(commentsList)
             }
         }

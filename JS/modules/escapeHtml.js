@@ -1,4 +1,7 @@
 export function escapeHtml(html) {
+    if (typeof html !== 'string') {
+        return ''
+    }
     return html
         .replaceAll(/&/g, '&amp;')
         .replaceAll(/</g, '&lt;')

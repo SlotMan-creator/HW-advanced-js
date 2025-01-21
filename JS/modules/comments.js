@@ -4,14 +4,14 @@ export let comments = [
         date: '12.02.22 12:18',
         text: 'Это будет первый комментарий на этой странице',
         likes: 3,
-        liked: false,
+        isLiked: false,
     },
     {
         name: 'Варвара Н.',
         date: '13.02.22 19:22',
         text: 'Мне нравится как оформлена эта страница! ❤',
         likes: 75,
-        liked: true,
+        isLiked: true,
     },
 ]
 
@@ -24,7 +24,7 @@ export function addComment(name, text) {
         date: formattedDate,
         text: text,
         likes: 0,
-        liked: false,
+        isLiked: false,
     }
 
     comments.push(newComment)
