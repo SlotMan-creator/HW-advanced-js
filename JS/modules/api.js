@@ -21,3 +21,15 @@ export const fetchComments = () => {
             return appComments
         })
 }
+
+export const postComments = (text, name) => {
+    return fetch(`${host}/comments`, {
+        method: 'POST',
+        body: JSON.stringify({
+            text,
+            name,
+        }),
+    }).then(() => {
+        return fetchComments()
+    })
+}

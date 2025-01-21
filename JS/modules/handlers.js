@@ -1,7 +1,7 @@
-import { fetchComments } from './api.js'
+import { postComments } from './api.js'
 import { renderComments } from './renderComments.js'
 import { escapeHtml } from './escapeHtml.js'
-import { comments } from './comments.js'
+import { comments, updateComments } from './comments.js'
 
 const inputEl = document.querySelector('.add-form-name')
 export function setupEventListeners(addButton, commentsList, textareaEl) {
@@ -14,10 +14,12 @@ export function setupEventListeners(addButton, commentsList, textareaEl) {
             return
         }
 
-        fetchComments(name, text)
-        inputEl.value = ''
-        textareaEl.value = ''
-        renderComments(commentsList)
+        postComments(escapeHtml(name), escapeHtml(text)).then((data) => {
+            updateComments(data)
+            renderComments(commentsList)
+            inputEl.value = ''
+            textareaEl.value = ''
+        })
     })
 
     commentsList.addEventListener('click', (event) => {
