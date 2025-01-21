@@ -1,4 +1,4 @@
-import { addComment } from './comments.js'
+import { fetchComments } from './api.js'
 import { renderComments } from './renderComments.js'
 import { escapeHtml } from './escapeHtml.js'
 import { comments } from './comments.js'
@@ -14,7 +14,7 @@ export function setupEventListeners(addButton, commentsList, textareaEl) {
             return
         }
 
-        addComment(name, text)
+        fetchComments(name, text)
         inputEl.value = ''
         textareaEl.value = ''
         renderComments(commentsList)
