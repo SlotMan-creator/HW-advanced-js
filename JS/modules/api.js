@@ -33,5 +33,3 @@ export const postComments = (text, name) => {
         return fetchComments()
     })
 }
-
-// export const updateComments = (comment) => {
