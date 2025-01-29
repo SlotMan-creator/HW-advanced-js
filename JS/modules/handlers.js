@@ -6,15 +6,20 @@ import { comments, updateComments } from './comments.js'
 const inputEl = document.querySelector('.add-form-name')
 export function setupEventListeners(addButton, commentsList, textareaEl) {
     addButton.addEventListener('click', () => {
-        const name = inputEl.value.trim()
-        const text = textareaEl.value.trim()
+        const name = textareaEl.value.trim()
+        const text = inputEl.value.trim()
 
         if (!name || !text) {
             alert('Пожалуйста, заполните все поля!')
             return
         }
 
+        document.querySelector('.form-loading').style.display = 'block'
+        document.querySelector('.add-form').style.display = 'none'
+
         postComments(escapeHtml(name), escapeHtml(text)).then((data) => {
+            document.querySelector('.form-loading').style.display = 'none'
+            document.querySelector('.add-form').style.display = 'flex'
             updateComments(data)
             renderComments(commentsList)
             inputEl.value = ''
@@ -22,14 +27,34 @@ export function setupEventListeners(addButton, commentsList, textareaEl) {
         })
     })
 
+    function delay(interval = 300) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve()
+            }, interval)
+        })
+    }
+
     commentsList.addEventListener('click', (event) => {
         if (event.target.classList.contains('like-button')) {
             const index = event.target.dataset.index
             if (comments[index]) {
+                event.target.classList.add('-loading-like')
+                setTimeout(() => {
+                    event.target.classList.remove('-loading-like')
+                }, 1500)
                 const comment = comments[index]
-                comment.isLiked = !comment.isLiked
-                comment.isLiked ? comment.likes++ : comment.likes--
-                renderComments(commentsList)
+                comment.isLikeLoading = true
+                delay(1500).then(() => {
+                    comment.isLiked = !comment.isLiked
+                    comment.isLiked ? comment.likes++ : comment.likes--
+                    comment.isLikeLoading = false
+                    renderComments(commentsList)
+                    event.target.classList.toggle(
+                        '-active-like',
+                        comment.isLiked,
+                    )
+                })
             }
         }
 

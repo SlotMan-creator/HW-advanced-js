@@ -3,33 +3,29 @@ const formattedDate = (dateString) => {
     const date = new Date(dateString)
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
 }
-export const fetchComments = () => {
-    return fetch(`${host}/comments`)
-        .then((response) => {
-            return response.json()
-        })
-        .then((responseData) => {
-            const appComments = responseData.comments.map((comment) => {
-                return {
-                    name: comment.author.name,
-                    date: formattedDate(comment.date),
-                    text: comment.text,
-                    likes: comment.likes,
-                    isLiked: false,
-                }
-            })
-            return appComments
-        })
+
+export const fetchComments = async () => {
+    const response = await fetch(`${host}/comments`)
+    const responseData = await response.json()
+    const appComments = responseData.comments.map((comment) => {
+        return {
+            name: comment.author.name,
+            date: formattedDate(comment.date),
+            text: comment.text,
+            likes: comment.likes,
+            isLiked: false,
+        }
+    })
+    return appComments
 }
 
-export const postComments = (text, name) => {
-    return fetch(`${host}/comments`, {
+export const postComments = async (text, name) => {
+    await fetch(`${host}/comments`, {
         method: 'POST',
         body: JSON.stringify({
             text,
             name,
         }),
-    }).then(() => {
-        return fetchComments()
     })
+    return await fetchComments()
 }
