@@ -6,8 +6,8 @@ import { comments, updateComments } from './comments.js'
 const inputEl = document.querySelector('.add-form-name')
 export function setupEventListeners(addButton, commentsList, textareaEl) {
     addButton.addEventListener('click', () => {
-        const name = inputEl.value.trim()
-        const text = textareaEl.value.trim()
+        const name = textareaEl.value.trim()
+        const text = inputEl.value.trim()
 
         if (!name || !text) {
             alert('Пожалуйста, заполните все поля!')
