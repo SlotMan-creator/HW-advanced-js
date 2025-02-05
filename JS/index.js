@@ -6,6 +6,7 @@ import { updateComments } from './modules/comments.js'
 const textareaEl = document.querySelector('.add-form-text')
 const addButton = document.querySelector('.add-form-button')
 const commentsList = document.querySelector('.comments')
+commentsList.innerHTML = 'Пожалуйста,подождите,идет загрузка комментариев...'
 
 fetchComments().then((data) => {
     updateComments(data)
