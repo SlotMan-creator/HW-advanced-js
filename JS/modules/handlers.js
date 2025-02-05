@@ -37,6 +37,7 @@ export function setupEventListeners(addButton, commentsList, textareaEl) {
 
     commentsList.addEventListener('click', (event) => {
         if (event.target.classList.contains('like-button')) {
+            event.stopPropagation()
             const index = event.target.dataset.index
             if (comments[index]) {
                 event.target.classList.add('-loading-like')
@@ -56,6 +57,7 @@ export function setupEventListeners(addButton, commentsList, textareaEl) {
                     )
                 })
             }
+            return
         }
 
         const commentElement = event.target.closest('.comment')
