@@ -4,7 +4,6 @@ const formattedDate = (dateString) => {
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
 }
 
-// Состояние для формы
 const formState = {
     name: '',
     text: '',
@@ -32,14 +31,14 @@ export const fetchComments = async () => {
             alert('Сервер сломался, попробуй позже')
         }
         console.error('Не удалось загрузить комментарии:', error)
-        throw error // Прокидываем ошибку дальше, если необходимо
+        throw error
     }
 }
 
-export const postComments = async (text, name) => {
+const postComments = async (text, name) => {
     if (text.length < 3 || name.length < 3) {
         alert('Имя и комментарий должны быть не короче 3 символов')
-        return // Не отправляем комментарий, если ошибка
+        return
     }
     try {
         const response = await fetch(`${host}/comments`, {
@@ -58,7 +57,6 @@ export const postComments = async (text, name) => {
         return await fetchComments()
     } catch (error) {
         if (!navigator.onLine) {
-            // Проверка на наличие интернет-соединения
             alert('Кажется, у вас сломался интернет, попробуйте позже')
         } else if (error.message.includes('5')) {
             alert('Извините сервер упал, попробуйте позже')
@@ -66,22 +64,19 @@ export const postComments = async (text, name) => {
             alert('Ошибка при добавлении комментария')
         }
         console.error('Не удалось отправить комментарий:', error)
-        throw error // Прокидываем ошибку дальше
+        throw error
     }
 }
 
-// Обработчик события input для сохранения состояния формы
 const onInputChange = (event) => {
     const { name, value } = event.target
     formState[name] = value
 }
 
-// Пример обработки формы
 document.querySelector('.add-form-name').addEventListener('input', (event) => {
     onInputChange(event)
 })
 
-// Пример функции для отправки комментария
 const submitComment = async () => {
     await postComments(formState.text, formState.name)
 }
