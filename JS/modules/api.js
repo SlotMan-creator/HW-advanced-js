@@ -35,7 +35,7 @@ export const fetchComments = async () => {
     }
 }
 
-const postComments = async (text, name) => {
+export const postComments = async (text, name) => {
     if (text.length < 3 || name.length < 3) {
         alert('Имя и комментарий должны быть не короче 3 символов')
         return
