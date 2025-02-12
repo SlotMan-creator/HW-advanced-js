@@ -17,14 +17,17 @@ export function setupEventListeners(addButton, commentsList, textareaEl) {
         document.querySelector('.form-loading').style.display = 'block'
         document.querySelector('.add-form').style.display = 'none'
 
-        postComments(escapeHtml(name), escapeHtml(text)).then((data) => {
-            document.querySelector('.form-loading').style.display = 'none'
-            document.querySelector('.add-form').style.display = 'flex'
-            updateComments(data)
-            renderComments(commentsList)
-            inputEl.value = ''
-            textareaEl.value = ''
-        })
+        postComments(escapeHtml(name), escapeHtml(text))
+            .then((data) => {
+                updateComments(data)
+                renderComments(commentsList)
+                inputEl.value = ''
+                textareaEl.value = ''
+            })
+            .finally(() => {
+                document.querySelector('.form-loading').style.display = 'none'
+                document.querySelector('.add-form').style.display = 'flex'
+            })
     })
 
     function delay(interval = 300) {

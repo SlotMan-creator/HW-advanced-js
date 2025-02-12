@@ -34,12 +34,7 @@ export const fetchComments = async () => {
         throw error
     }
 }
-
 export const postComments = async (text, name) => {
-    if (text.length < 3 || name.length < 3) {
-        alert('Имя и комментарий должны быть не короче 3 символов')
-        return
-    }
     try {
         const response = await fetch(`${host}/comments`, {
             method: 'POST',
@@ -50,20 +45,29 @@ export const postComments = async (text, name) => {
             }),
         })
 
-        if (!response.ok) {
-            throw new Error(`Ошибка: ${response.status} ${response.statusText}`)
+        if (response.status === 500) {
+            throw new Error('Сервер сломался')
+        }
+
+        if (response.status === 400) {
+            throw new Error(
+                'Ошибка в запросе пользователя,исправьте и повторите',
+            )
         }
 
         return await fetchComments()
     } catch (error) {
-        if (!navigator.onLine) {
-            alert('Кажется, у вас сломался интернет, попробуйте позже')
-        } else if (error.message.includes('5')) {
+        if (error.message === 'Сервер сломался') {
             alert('Извините сервер упал, попробуйте позже')
-        } else {
-            alert('Ошибка при добавлении комментария')
+        } else if (
+            error.message ===
+            'Ошибка в запросе пользователя,исправьте и повторите'
+        ) {
+            alert(
+                'Текст имени или комментария должен содержать хотя бы 3 символа',
+            )
         }
-        console.error('Не удалось отправить комментарий:', error)
+        alert(`Не удалось отправить комментарий: ${error.message}`)
         throw error
     }
 }
@@ -76,9 +80,3 @@ const onInputChange = (event) => {
 document.querySelector('.add-form-name').addEventListener('input', (event) => {
     onInputChange(event)
 })
-
-const submitComment = async () => {
-    await postComments(formState.text, formState.name)
-}
-
-submitComment()
