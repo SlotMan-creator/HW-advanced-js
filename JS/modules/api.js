@@ -57,6 +57,7 @@ export const postComments = async (text, name) => {
 
         return await fetchComments()
     } catch (error) {
+        let internetError = false
         if (error.message === 'Сервер сломался') {
             alert('Извините сервер упал, попробуйте позже')
         } else if (
@@ -66,8 +67,13 @@ export const postComments = async (text, name) => {
             alert(
                 'Текст имени или комментария должен содержать хотя бы 3 символа',
             )
+        } else {
+            alert('Кажется,у вас пропал интернет,попробуйте позже')
+            internetError = true
         }
-        alert(`Не удалось отправить комментарий: ${error.message}`)
+        if (!internetError) {
+            alert(`Не удалось отправить комментарий: ${error.message}`)
+        }
         throw error
     }
 }
