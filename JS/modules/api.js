@@ -47,6 +47,11 @@ export const postComments = async (text, name) => {
 
         if (response.status === 500) {
             throw new Error('Сервер сломался')
+            // return await postComments(text, name)
+            // ---  это условие для дополнительного дз,где после появления 500й ошибки,
+            // повторно отправляется запрос к АПИ для успешной отправки комментов
+            // для его включения раскомментировать 'return await postComments(text, name)' и
+            // закомментировать 'throw new Error('Сервер сломался')'
         }
 
         if (response.status === 400) {
