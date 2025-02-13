@@ -12,8 +12,8 @@ const formState = {
 export const fetchComments = async () => {
     try {
         const response = await fetch(`${host}/comments`)
-        if (!response.ok) {
-            throw new Error(`Ошибка: ${response.status} ${response.statusText}`)
+        if (response.status >= 500 && response.status < 600) {
+            throw new Error('Сервер сломался')
         }
         const responseData = await response.json()
         const appComments = responseData.comments.map((comment) => {
@@ -27,10 +27,10 @@ export const fetchComments = async () => {
         })
         return appComments
     } catch (error) {
-        if (error.message.includes('5')) {
-            alert('Сервер сломался, попробуй позже')
+        if (error.message === 'Сервер сломался') {
+            alert('Извините сервер упал, попробуйте позже')
         }
-        console.error('Не удалось загрузить комментарии:', error)
+        alert(`Не удалось загрузить комментарии: ${error.message}`)
         throw error
     }
 }
@@ -45,7 +45,7 @@ export const postComments = async (text, name) => {
             }),
         })
 
-        if (response.status === 500) {
+        if (response.status >= 500 && response.status < 600) {
             throw new Error('Сервер сломался')
             // return await postComments(text, name)
             // ---  это условие для дополнительного дз,где после появления 500й ошибки,
@@ -54,7 +54,7 @@ export const postComments = async (text, name) => {
             // закомментировать 'throw new Error('Сервер сломался')'
         }
 
-        if (response.status === 400) {
+        if (response.status >= 400 && response.status < 500) {
             throw new Error(
                 'Ошибка в запросе пользователя,исправьте и повторите',
             )
