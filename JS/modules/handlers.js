@@ -3,7 +3,7 @@ import { renderComments } from './renderComments.js'
 import { escapeHtml } from './escapeHtml.js'
 import { comments, updateComments } from './comments.js'
 
-const inputEl = document.querySelector('.add-form-name')
+export const inputEl = document.querySelector('.add-form-name')
 export function setupEventListeners(addButton, commentsList, textareaEl) {
     addButton.addEventListener('click', () => {
         const name = textareaEl.value.trim()
@@ -17,14 +17,17 @@ export function setupEventListeners(addButton, commentsList, textareaEl) {
         document.querySelector('.form-loading').style.display = 'block'
         document.querySelector('.add-form').style.display = 'none'
 
-        postComments(escapeHtml(name), escapeHtml(text)).then((data) => {
-            document.querySelector('.form-loading').style.display = 'none'
-            document.querySelector('.add-form').style.display = 'flex'
-            updateComments(data)
-            renderComments(commentsList)
-            inputEl.value = ''
-            textareaEl.value = ''
-        })
+        postComments(escapeHtml(name), escapeHtml(text))
+            .then((data) => {
+                updateComments(data)
+                renderComments(commentsList)
+                inputEl.value = ''
+                textareaEl.value = ''
+            })
+            .finally(() => {
+                document.querySelector('.form-loading').style.display = 'none'
+                document.querySelector('.add-form').style.display = 'flex'
+            })
     })
 
     function delay(interval = 300) {
