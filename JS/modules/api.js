@@ -1,7 +1,14 @@
-const host = 'https://wedev-api.sky.pro/api/v1/alexandr-perevoz'
+const host = 'https://wedev-api.sky.pro/api/v2/alexandr-perevoz'
+const authHost = 'https://wedev-api.sky.pro/api/user'
 const formattedDate = (dateString) => {
     const date = new Date(dateString)
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+}
+
+let token = ''
+
+export const setToken = (newToken) => {
+    token = newToken
 }
 
 const formState = {
@@ -38,6 +45,9 @@ export const postComments = async (text, name) => {
     try {
         const response = await fetch(`${host}/comments`, {
             method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
             body: JSON.stringify({
                 text,
                 name,
@@ -54,9 +64,15 @@ export const postComments = async (text, name) => {
             // закомментировать 'throw new Error('Сервер сломался')'
         }
 
-        if (response.status >= 400 && response.status < 500) {
+        if (response.status === 400) {
             throw new Error(
                 'Ошибка в запросе пользователя,исправьте и повторите',
+            )
+        }
+
+        if (response.status === 401) {
+            throw new Error(
+                'Добавление нового комментария доступно только для зарегистрированных пользователей',
             )
         }
 
@@ -72,6 +88,11 @@ export const postComments = async (text, name) => {
             alert(
                 'Текст имени или комментария должен содержать хотя бы 3 символа',
             )
+        } else if (
+            error.message ===
+            'Добавление нового комментария доступно только для зарегистрированных пользователей'
+        ) {
+            alert('Войдите в аккаунт или зарегистрируйтесь')
         } else {
             alert('Кажется,у вас пропал интернет,попробуйте позже')
             internetError = true
@@ -91,3 +112,17 @@ const onInputChange = (event) => {
 document.querySelector('.add-form-name').addEventListener('input', (event) => {
     onInputChange(event)
 })
+
+export const login = (login, password) => {
+    return fetch(authHost + '/login', {
+        method: 'POST',
+        body: JSON.stringify({ login: login, password: password }),
+    })
+}
+
+export const registration = (name, login, password) => {
+    return fetch(authHost, {
+        method: 'POST',
+        body: JSON.stringify({ name: name, login: login, password: password }),
+    })
+}
