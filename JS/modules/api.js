@@ -109,8 +109,8 @@ const onInputChange = (event) => {
     formState[name] = value
 }
 
-document.querySelector('.add-form-name').addEventListener('input', (event) => {
-    onInputChange(event)
+document.querySelectorAll('.add-form-name').forEach((input) => {
+    input.addEventListener('input', onInputChange)
 })
 
 export const login = (login, password) => {

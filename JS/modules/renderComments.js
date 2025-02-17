@@ -44,7 +44,7 @@ export function renderComments(commentsList) {
             <div class="form-loading" style="display: none; margin-top: 25px;">
                 Подождите,комментарий добавляется...
             </div>`
-    const linkToLoginText = `<p>Чтобы отправить комментарий, <span 
+    const linkToLoginText = `<p>Чтобы отправить комментарий, <span
     class='link-login>войдите</span></p>`
 
     const baseHtml = `< class="comments">${commentsHtml}
