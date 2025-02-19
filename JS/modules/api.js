@@ -5,7 +5,7 @@ const formattedDate = (dateString) => {
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
 }
 
-let token = ''
+export let token = ''
 
 export const setToken = (newToken) => {
     token = newToken

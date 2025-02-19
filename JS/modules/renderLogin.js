@@ -1,3 +1,5 @@
+import { fetchRenderComments } from '../index.js'
+import { login, setToken } from './api.js'
 export const renderLogin = () => {
     const container = document.querySelector('.container')
     const loginHtml = `
@@ -18,10 +20,27 @@ export const renderLogin = () => {
         required
       ></input>
       <fieldset class="add-form-registry">
-          <button class="add-form-button-main button-main" type="submit">Войти</button>
+          <button class="add-form-button-main button-main" id="login-button" type="submit">Войти</button>
           <u class="add-form-button registry">Зарегистрироваться</u>
       </fieldset>
     </section>`
 
     container.innerHTML = loginHtml
+
+    const loginEl = document.getElementById('login')
+    const passwordEl = document.getElementById('password')
+    const loginButtonEl = document.getElementById('login-button')
+    loginButtonEl.addEventListener('click', () => {
+        if (loginEl.value && passwordEl.value) {
+            login(loginEl.value, passwordEl.value)
+                .then((response) => {
+                    return response.json()
+                })
+                .then((userData) => {
+                    console.log(userData)
+                    setToken(userData.user.token)
+                    fetchRenderComments()
+                })
+        }
+    })
 }

@@ -1,12 +1,14 @@
 import { escapeHtml } from './escapeHtml.js'
 import { comments } from './comments.js'
 import { renderLogin } from './renderLogin.js'
+import { token } from './api.js'
+import { setupEventListeners } from './handlers.js'
 
 export function renderComments(commentsList) {
     const container = document.querySelector('.container')
-    const commentsHtml = (commentsList.innerHTML = '')
-    comments.forEach((comment, index) => {
-        const commentEl = `
+    const commentsHtml = comments
+        .map((comment, index) => {
+            return `
         <li class="comment">
           <div class="comment-header">
             <div>${escapeHtml(comment.name)}</div>
@@ -22,9 +24,12 @@ export function renderComments(commentsList) {
             </div>
           </div>
         </li>`
-        commentsList.innerHTML += commentEl
-    })
-    const addCommentsHtml = `
+        })
+        .join('')
+
+    // Нужно подставить переменную имени в первый инпут,где "введите ваше имя"
+    // атрибут.value
+    const formCommentsHtml = `
             <div class="add-form">
                 <input
                     type="text"
@@ -44,15 +49,23 @@ export function renderComments(commentsList) {
             <div class="form-loading" style="display: none; margin-top: 25px;">
                 Подождите,комментарий добавляется...
             </div>`
-    const linkToLoginText = `<p>Чтобы отправить комментарий, <span
-    class='link-login>войдите</span></p>`
+    const linkToLoginText = `<p>Чтобы отправить комментарий, <span class='link-login'>войдите</span></p>`
 
-    const baseHtml = `< class="comments">${commentsHtml}
-    ${linkToLoginText}`
+    const baseHtml = `<ul class="comments">${commentsHtml}</ul>
+
+    ${token ? formCommentsHtml : linkToLoginText}`
 
     container.innerHTML = baseHtml
 
-    document.querySelector('.link-login').addEventListener('click', () => {
-        renderLogin()
-    })
+    if (!token) {
+        document.querySelector('.link-login').addEventListener('click', () => {
+            renderLogin()
+        })
+    }
+
+    if (token) {
+        const textareaEl = document.querySelector('.add-form-text')
+        const addButton = document.querySelector('.add-form-button')
+        setupEventListeners(addButton, commentsList, textareaEl)
+    }
 }
