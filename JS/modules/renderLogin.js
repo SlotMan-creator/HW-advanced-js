@@ -21,7 +21,7 @@ export const renderLogin = () => {
       ></input>
       <fieldset class="add-form-registry">
           <button class="add-form-button-main button-main" id="login-button" type="submit">Войти</button>
-          <u class="add-form-button registry">Зарегистрироваться</u>
+          <u class="add-form-button registry" id="registration">Зарегистрироваться</u>
       </fieldset>
     </section>`
 
@@ -30,6 +30,7 @@ export const renderLogin = () => {
     const loginEl = document.getElementById('login')
     const passwordEl = document.getElementById('password')
     const loginButtonEl = document.getElementById('login-button')
+    const regEl = document.getElementById('registration')
     loginButtonEl.addEventListener('click', () => {
         if (loginEl.value && passwordEl.value) {
             login(loginEl.value, passwordEl.value)

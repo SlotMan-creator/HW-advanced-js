@@ -4,8 +4,6 @@ import { updateComments } from './modules/comments.js'
 
 const commentsList = document.querySelector('.comments')
 
-// commentsList.innerHTML = 'Пожалуйста,подождите,идет загрузка комментариев...'
-
 // document.querySelector('.container').innerHTML = `<ul class="comments">
 //             </ul>
 //         <div class="add-form">
