@@ -1,10 +1,10 @@
 import { escapeHtml } from './escapeHtml.js'
 import { comments } from './comments.js'
 import { renderLogin } from './renderLogin.js'
-import { token } from './api.js'
+import { token, userName } from './api.js'
 import { setupEventListeners } from './handlers.js'
 
-export function renderComments(commentsList) {
+export function renderComments() {
     const container = document.querySelector('.container')
     const commentsHtml = comments
         .map((comment, index) => {
@@ -27,11 +27,10 @@ export function renderComments(commentsList) {
         })
         .join('')
 
-    // Нужно подставить переменную имени в первый инпут,где "введите ваше имя"
-    // атрибут.value
     const formCommentsHtml = `
             <div class="add-form">
-                <input
+                <input value="${userName}"
+                    readonly
                     type="text"
                     class="add-form-name"
                     placeholder="Введите ваше имя"
@@ -56,6 +55,7 @@ export function renderComments(commentsList) {
     ${token ? formCommentsHtml : linkToLoginText}`
 
     container.innerHTML = baseHtml
+    const commentsList = document.querySelector('.comments')
 
     if (!token) {
         document.querySelector('.link-login').addEventListener('click', () => {

@@ -1,5 +1,5 @@
 import { fetchRenderComments } from '../index.js'
-import { login, setToken } from './api.js'
+import { login, setToken, setUserName } from './api.js'
 export const renderLogin = () => {
     const container = document.querySelector('.container')
     const loginHtml = `
@@ -30,7 +30,6 @@ export const renderLogin = () => {
     const loginEl = document.getElementById('login')
     const passwordEl = document.getElementById('password')
     const loginButtonEl = document.getElementById('login-button')
-    const regEl = document.getElementById('registration')
     loginButtonEl.addEventListener('click', () => {
         if (loginEl.value && passwordEl.value) {
             login(loginEl.value, passwordEl.value)
@@ -40,6 +39,7 @@ export const renderLogin = () => {
                 .then((userData) => {
                     console.log(userData)
                     setToken(userData.user.token)
+                    setUserName(userData.user.name)
                     fetchRenderComments()
                 })
         }

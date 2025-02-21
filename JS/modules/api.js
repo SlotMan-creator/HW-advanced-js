@@ -11,6 +11,11 @@ export const setToken = (newToken) => {
     token = newToken
 }
 
+export let userName = ''
+export const setUserName = (newUserName) => {
+    userName = newUserName
+}
+
 const formState = {
     name: '',
     text: '',
@@ -113,11 +118,20 @@ document.querySelectorAll('.add-form-name').forEach((input) => {
     input.addEventListener('input', onInputChange)
 })
 
-export const login = (login, password) => {
-    return fetch(authHost + '/login', {
-        method: 'POST',
-        body: JSON.stringify({ login: login, password: password }),
-    })
+export const login = async (login, password) => {
+    try {
+        const response = await fetch(authHost + '/login', {
+            method: 'POST',
+            body: JSON.stringify({ login: login, password: password }),
+        })
+        if (response.status === 400) {
+            throw new Error('Неправильный логин или пароль')
+        }
+    } catch (error) {
+        if (error.message === 'Неправильный логин или пароль') {
+            alert('Неправильный логин или пароль')
+        }
+    }
 }
 
 export const registration = (name, login, password) => {

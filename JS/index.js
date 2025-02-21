@@ -2,8 +2,6 @@ import { renderComments } from './modules/renderComments.js'
 import { fetchComments } from './modules/api.js'
 import { updateComments } from './modules/comments.js'
 
-const commentsList = document.querySelector('.comments')
-
 // document.querySelector('.container').innerHTML = `<ul class="comments">
 //             </ul>
 //         <div class="add-form">
@@ -31,7 +29,7 @@ const commentsList = document.querySelector('.comments')
 export const fetchRenderComments = () => {
     fetchComments().then((data) => {
         updateComments(data)
-        renderComments(commentsList)
+        renderComments()
     })
 }
 
