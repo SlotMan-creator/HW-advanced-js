@@ -10,3 +10,5 @@ export const fetchRenderComments = () => {
 }
 
 fetchRenderComments()
+
+// фетч-функция с рендером комментов и с их обновлением

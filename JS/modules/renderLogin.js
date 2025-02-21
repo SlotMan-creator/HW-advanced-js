@@ -3,7 +3,7 @@ import { login, setToken, setUserName } from './api.js'
 export const renderLogin = () => {
     const container = document.querySelector('.container')
     const loginHtml = `
-    <section class="add-form">
+    <section class="add-form add-form-reg">
        <h1>Форма входа</h1>
       <input 
         type="text"
