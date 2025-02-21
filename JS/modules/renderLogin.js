@@ -33,14 +33,14 @@ export const renderLogin = () => {
     loginButtonEl.addEventListener('click', () => {
         if (loginEl.value && passwordEl.value) {
             login(loginEl.value, passwordEl.value)
-                .then((response) => {
-                    return response.json()
-                })
                 .then((userData) => {
                     console.log(userData)
                     setToken(userData.user.token)
                     setUserName(userData.user.name)
                     fetchRenderComments()
+                })
+                .catch((error) => {
+                    console.log(error.message)
                 })
         }
     })

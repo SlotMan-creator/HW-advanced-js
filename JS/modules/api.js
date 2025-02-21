@@ -62,11 +62,6 @@ export const postComments = async (text, name) => {
 
         if (response.status >= 500 && response.status < 600) {
             throw new Error('Сервер сломался')
-            // return await postComments(text, name)
-            // ---  это условие для дополнительного дз,где после появления 500й ошибки,
-            // повторно отправляется запрос к АПИ для успешной отправки комментов
-            // для его включения раскомментировать 'return await postComments(text, name)' и
-            // закомментировать 'throw new Error('Сервер сломался')'
         }
 
         if (response.status === 400) {
@@ -127,10 +122,19 @@ export const login = async (login, password) => {
         if (response.status === 400) {
             throw new Error('Неправильный логин или пароль')
         }
+        if (response.status >= 500 && response.status < 600) {
+            throw new Error('Сервер сломался')
+        }
+        const userData = await response.json()
+        return userData
     } catch (error) {
         if (error.message === 'Неправильный логин или пароль') {
             alert('Неправильный логин или пароль')
         }
+        if (error.message === 'Сервер сломался') {
+            alert('Извините сервер упал, попробуйте позже')
+        }
+        throw error
     }
 }
 
