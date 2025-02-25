@@ -3,9 +3,9 @@ import { renderComments } from './renderComments.js'
 import { escapeHtml } from './escapeHtml.js'
 import { comments, updateComments } from './comments.js'
 
-export const inputEl = document.querySelector('.add-form-name')
 export function setupEventListeners(addButton, commentsList, textareaEl) {
     addButton.addEventListener('click', () => {
+        const inputEl = document.querySelector('.add-form-name')
         const name = textareaEl.value.trim()
         const text = inputEl.value.trim()
 

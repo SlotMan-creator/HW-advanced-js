@@ -9,3 +9,5 @@ export function escapeHtml(html) {
         .replaceAll('"', '&quot;')
         .replaceAll("'", '&#39;')
 }
+
+// чтобы не взломали

@@ -1,16 +1,14 @@
 import { renderComments } from './modules/renderComments.js'
-import { setupEventListeners } from './modules/handlers.js'
 import { fetchComments } from './modules/api.js'
 import { updateComments } from './modules/comments.js'
 
-const textareaEl = document.querySelector('.add-form-text')
-const addButton = document.querySelector('.add-form-button')
-const commentsList = document.querySelector('.comments')
-commentsList.innerHTML = 'Пожалуйста,подождите,идет загрузка комментариев...'
+export const fetchRenderComments = () => {
+    fetchComments().then((data) => {
+        updateComments(data)
+        renderComments()
+    })
+}
 
-fetchComments().then((data) => {
-    updateComments(data)
-    renderComments(commentsList)
-})
+fetchRenderComments()
 
-setupEventListeners(addButton, commentsList, textareaEl)
+// фетч-функция с рендером комментов и с их обновлением
