@@ -54,7 +54,7 @@ export const goToPage = (newPage, data) => {
             page = LOADING_PAGE
             renderApp()
 
-            return getPosts({ token: '' })
+            return getPosts({ token: getToken() })
                 .then((newPosts) => {
                     page = POSTS_PAGE
                     posts = newPosts
