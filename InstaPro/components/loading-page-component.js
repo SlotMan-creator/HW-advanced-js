@@ -1,3 +1,5 @@
+import { renderHeaderComponent } from './header-component.js'
+
 /**
  * Компонент страницы загрузки.
  * Этот компонент отображает страницу с индикатором загрузки и заголовком.
@@ -6,6 +8,8 @@
  * @param {HTMLElement} params.appEl - Корневой элемент приложения, в который будет рендериться страница загрузки.
  * @param {Object} params.user - Объект пользователя, содержащий данные о текущем авторизованном пользователе (если он есть).
  * @param {Function} params.goToPage - Функция для навигации по страницам.
+ *
+ *
  */
 export function renderLoadingPageComponent({ appEl, user, goToPage }) {
     /**
