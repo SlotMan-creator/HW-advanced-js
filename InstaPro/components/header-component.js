@@ -1,5 +1,11 @@
-import { logout } from '../index.js'
-import { ADD_POSTS_PAGE, AUTH_PAGE, POSTS_PAGE } from '../routes.js'
+import { logout, goToPage } from '../index.js'
+import {
+    ADD_POSTS_PAGE,
+    AUTH_PAGE,
+    POSTS_PAGE,
+    USER_POSTS_PAGE,
+    LOADING_PAGE,
+} from '../routes.js'
 
 /**
  * Компонент заголовка страницы.
@@ -38,6 +44,7 @@ export function renderHeaderComponent({ element, user, goToPage }) {
     element
         .querySelector('.add-or-login-button')
         .addEventListener('click', () => {
+            console.log('goToPage:', goToPage)
             if (user) {
                 goToPage(ADD_POSTS_PAGE)
             } else {
