@@ -4,14 +4,15 @@ export function saveUserToLocalStorage(user) {
 
 export function getUserFromLocalStorage(user) {
     try {
-        return JSON.parse(window.localStorage.getItem('user'))
+        return JSON.parse(window.localStorage.getItem(user))
     } catch (error) {
+        console.error('Ошибка анализа пользователя из localStorage:', error)
         return null
     }
 }
 
 export function removeUserFromLocalStorage(user) {
-    window.localStorage.removeItem('user')
+    window.localStorage.removeItem(user)
 }
 
 export function escapeHtml(html) {
